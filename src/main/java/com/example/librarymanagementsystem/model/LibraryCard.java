@@ -4,11 +4,11 @@ import com.example.librarymanagementsystem.Enum.CardStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
 
-//@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -20,8 +20,11 @@ public class LibraryCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String cardNo;
+
+    @Enumerated(EnumType.STRING)
     CardStatus cardStatus;
-    @CreatedDate
+
+    @CreationTimestamp
     Date issueDate;
     @OneToOne
     @JoinColumn

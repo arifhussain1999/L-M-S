@@ -1,5 +1,6 @@
 package com.example.librarymanagementsystem.service;
 
+import com.example.librarymanagementsystem.Enum.CardStatus;
 import com.example.librarymanagementsystem.model.LibraryCard;
 import com.example.librarymanagementsystem.repository.StudentRepository;
 import com.example.librarymanagementsystem.model.Student;
@@ -8,17 +9,22 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class StudentService {
 @Autowired
 StudentRepository studentRepository;
 
-    public Student addStudent(Student student) {
+    public String addStudent(Student student) {
         LibraryCard libraryCard = new LibraryCard();
-       libraryCard.getCardNo();
+        libraryCard.setCardNo(String.valueOf(UUID.randomUUID()));
+        libraryCard.setCardStatus(CardStatus.ACTIVE);
+        libraryCard.setStudent(student);
+
+        student.setLibraryCard(libraryCard);
         Student savedStudent= studentRepository.save(student);
-        return savedStudent;
+        return "Saved Successfully";
     }
 
     public Student getStudent(int regNo) {
