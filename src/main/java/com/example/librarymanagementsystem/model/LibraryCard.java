@@ -7,6 +7,8 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
@@ -26,8 +28,11 @@ public class LibraryCard {
 
     @CreationTimestamp
     Date issueDate;
+
     @OneToOne
     @JoinColumn
     Student student;
 
+    @OneToMany(mappedBy = "libraryCard",cascade = CascadeType.ALL)
+    List<Transaction> transactionList = new ArrayList<>();
 }

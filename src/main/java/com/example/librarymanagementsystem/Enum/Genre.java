@@ -5,5 +5,5 @@ public enum Genre {
     ROMANCE,
     SciFi,
     NonFiction,
-    HISTORY
+    HISTORY,
 }
