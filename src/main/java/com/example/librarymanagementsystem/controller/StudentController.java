@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -25,5 +27,11 @@ public class StudentController {
            return new ResponseEntity<>(student,HttpStatus.FOUND);
        }
        return new ResponseEntity<>("Invalid ID",HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/get-males")
+    public List<String> getMales(){
+        List<String> males = studentService.getMales();
+        return males;
     }
 }
