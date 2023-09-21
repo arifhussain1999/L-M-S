@@ -27,9 +27,11 @@ public class Book {
     @Enumerated(EnumType.STRING)
     Genre genre;
 
+    int cost;
+
     boolean issued;
 
-    int cost;
+
 
     @ManyToOne
     @JoinColumn

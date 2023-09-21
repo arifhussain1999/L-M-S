@@ -3,6 +3,7 @@ package com.example.librarymanagementsystem.service;
 import com.example.librarymanagementsystem.Enum.CardStatus;
 import com.example.librarymanagementsystem.Enum.Gender;
 import com.example.librarymanagementsystem.dto.requestDTO.StudentRequest;
+import com.example.librarymanagementsystem.dto.responseDTO.LibraryCardResponse;
 import com.example.librarymanagementsystem.dto.responseDTO.StudentResponse;
 import com.example.librarymanagementsystem.model.LibraryCard;
 import com.example.librarymanagementsystem.repository.StudentRepository;
@@ -42,7 +43,13 @@ StudentRepository studentRepository;
         studentResponse.setName(savedStudent.getName());
         studentResponse.setEmail(savedStudent.getEmail());
         studentResponse.setMessage("You have been registered");
-        studentResponse.setIssuedCardNo(savedStudent.getLibraryCard().getCardNo());
+
+        LibraryCardResponse cardResponse = new LibraryCardResponse();
+        cardResponse.setCardNo(savedStudent.getLibraryCard().getCardNo());
+        cardResponse.setCardStatus(savedStudent.getLibraryCard().getCardStatus());
+        cardResponse.setIssueDate(savedStudent.getLibraryCard().getIssueDate());
+
+        studentResponse.setLibraryCardResponse(cardResponse);
 
         return studentResponse;
     }
