@@ -1,17 +1,15 @@
 package com.example.librarymanagementsystem.controller;
 
-import com.example.librarymanagementsystem.Enum.Gender;
 import com.example.librarymanagementsystem.Enum.Genre;
 import com.example.librarymanagementsystem.dto.responseDTO.BookResponse;
 import com.example.librarymanagementsystem.exception.AuthorNotFoundException;
-import com.example.librarymanagementsystem.exception.BookNotFoundException;
+import com.example.librarymanagementsystem.exception.BookNotAvailableException;
 import com.example.librarymanagementsystem.model.Book;
 import com.example.librarymanagementsystem.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class BookController {
             String response = bookService.deleteBook(idNo);
             return new ResponseEntity<>("Book deleted", HttpStatus.OK);
         }
-        catch (BookNotFoundException e){
+        catch (BookNotAvailableException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

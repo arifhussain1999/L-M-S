@@ -2,11 +2,12 @@ package com.example.librarymanagementsystem.service;
 import com.example.librarymanagementsystem.Enum.Genre;
 import com.example.librarymanagementsystem.dto.responseDTO.BookResponse;
 import com.example.librarymanagementsystem.exception.AuthorNotFoundException;
-import com.example.librarymanagementsystem.exception.BookNotFoundException;
+import com.example.librarymanagementsystem.exception.BookNotAvailableException;
 import com.example.librarymanagementsystem.model.Author;
 import com.example.librarymanagementsystem.model.Book;
 import com.example.librarymanagementsystem.repository.AuthorRepository;
 import com.example.librarymanagementsystem.repository.BookRepository;
+import com.example.librarymanagementsystem.transformer.BookTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,7 @@ public class BookService {
         //first check if book is present or not
         Optional<Book> bookOptional = bookRepository.findById(idNo);
         if(bookOptional.isEmpty()){
-            throw new BookNotFoundException("Book not found");
+            throw new BookNotAvailableException("Book not found");
         }
         Book bookOp = bookOptional.get();
         bookRepository.delete(bookOp);
@@ -66,14 +67,7 @@ public class BookService {
         List<BookResponse> responses = new ArrayList<>();
 
         for (Book book : books){
-            BookResponse bookResponse = new BookResponse();
-            bookResponse.setGenre(book.getGenre());
-            bookResponse.setCost(book.getCost());
-            bookResponse.setTitle(book.getTitle());
-            bookResponse.setNoOfPages(book.getNoOfPages());
-            bookResponse.setAuthorName(book.getAuthor().getName());
-
-            responses.add(bookResponse);
+            responses.add(BookTransformer.booktoBookResponse(book));
         }
         return responses;
     }
